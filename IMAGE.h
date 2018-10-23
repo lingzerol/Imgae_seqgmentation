@@ -57,7 +57,7 @@ public:
 	pixel operator[](int i) { return _img[i]; }
 	void rgb_to_lab();
 	double D2(const pixel&a, const pixel&b,double m=1) {
-		return dc2(a,b) + ds2(a,b) * (m*m / (_S*_S)); }
+		return dc2(a,b) + ds2(a,b) * (m*m / (_S)); }
 	std::vector<int> SLIC(int *&,int &, int, int, int, double, double);
 	int index(int r, int c) { return r * _width + c; }
 private:
@@ -108,7 +108,7 @@ void IMAGE::rgb_to_lab() {
 		double Y = R * 0.2126 + G * 0.7152 + B * 0.0722;
 		double Z = R * 0.0193 + G * 0.1192 + B * 0.9505;
 
-		X = X / 95.047;
+		/*X = X / 95.047;
 		Y = Y / 100.0;
 		Z = Z / 108.883;
 		
@@ -120,7 +120,7 @@ void IMAGE::rgb_to_lab() {
 		else Y = 1.0 / 3.0*(29.0 / 6.0)*(29.0 / 6.0)*Y + 4.0 / 29.0;
 		if (Z > bounce)Z = pow(Z, 1.0 / 3.0);
 		else Z = 1.0 / 3.0*(29.0 / 6.0)*(29.0 / 6.0)*Z + 4.0 / 29.0;
-		/*
+		*/
 		const double epsilon = 0.008856;	//actual CIE standard
 		const double kappa = 903.3;		//actual CIE standard
 
@@ -137,7 +137,7 @@ void IMAGE::rgb_to_lab() {
 		else				Y = (kappa*Y + 16.0) / 116.0;
 		if (Z > epsilon)	Z = pow(Z, 1.0 / 3.0);
 		else				Z = (kappa*Z + 16.0) / 116.0;
-		*/
+		
 		
 
 		_img[i]._p[0] = 116 * Y - 16;
